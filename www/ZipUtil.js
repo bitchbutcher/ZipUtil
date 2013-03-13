@@ -17,7 +17,7 @@
  under the License.
  */
  
-cordova.define("cordova/plugin/keychain", function(require, exports, module) 
+cordova.define("cordova/plugin/ziputil", function(require, exports, module) 
 {
  	var exec = require('cordova/exec');
 
