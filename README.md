@@ -31,3 +31,35 @@ The plugin's JavaScript functions are called after getting the plugin object thu
          @param targetFolder string the folder path of where to unzip the contents to
          */
 		zu.unzip = function(successCallBack, failureCallback, sourcePath, targetFolder);
+
+
+Sample code: 
+
+		// this is both a zip progress and and result handler
+		var win = function(json) {
+			if (json.zipProgress) {
+				// {"zipProgress":{"entryNumber":1,"source":"/path/to/test.zip","filename":"myfolder/myfile.png","entryTotal":10,"zip":false}}
+				console.log((json.zipProgress.zip? "zip" : "unzip") + " entry " + json.zipProgress.entryNumber + "/" + json.zipProgress.entryTotal + " ("+ ((json.zipProgress.entryNumber/json.zipProgress.entryTotal)*100).toFixed(2) + "%)" );
+		
+			} else if (json.zipResult) {
+				// zip ok, and done
+				// {"zipResult":{"zip":false,"source":"/path/to/test.zip","target":"/path/to/targetfolder/"}}
+		
+				console.log((json.zipResult.zip? "zip" : "unzip") + " OK: " + JSON.stringify(json));
+			}
+		}
+		
+		// handles failure
+		var fail = function(obj) {
+			if (obj && obj.zipResult) {
+				// zip failed, and done
+				// {"zipResult":{"zip":false,"source":"/path/to/test.zip","target":"/path/to/targetfolder/"}}
+				console.log((obj.zipResult.zip? "zip" : "unzip") + " FAIL: " + JSON.stringify(obj));
+			} else {
+				// general failure message
+				console.log("FAIL: " + obj);
+			}
+		}
+
+		var zu = cordova.require("cordova/plugin/ziputil");
+		zu.unzip(win, fail, "/path/to/test.zip", "/path/to/targetfolder/");
