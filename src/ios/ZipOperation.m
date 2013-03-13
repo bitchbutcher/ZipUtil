@@ -67,7 +67,7 @@
 @synthesize source, filename, zip, entryNumber, entryTotal, context;
 
 + (id) newProgress:(BOOL)aZip source:(NSString*)aSource filename:(NSString*)aFilename context:(id)aContext
-	entryNumber:(uint64_t)aEntryNumber entryTotal:(uint64_t)aEntryTotal
+       entryNumber:(uint64_t)aEntryNumber entryTotal:(uint64_t)aEntryTotal
 {
 	ZipProgress* progress = [ZipProgress alloc];
     if (!progress) return nil;
@@ -105,13 +105,13 @@
 
 - (id)initAsDeflate:(BOOL)aZip withSource:(NSString*)aSource target:(NSString*)aTarget andContext:(id)aContext
 {
-    if (![super init]) return nil;
-	
-	self.zip = aZip;
-	self.source = aSource;
-	self.target = aTarget;
-	self.context = aContext;
-	self.delegate = nil;
+    if (self = [super init]) {
+        self.zip = aZip;
+        self.source = aSource;
+        self.target = aTarget;
+        self.context = aContext;
+        self.delegate = nil;
+    }
 	
     return self;
 }

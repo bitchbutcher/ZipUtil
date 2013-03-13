@@ -22,6 +22,7 @@
 #import "ZipOperation.h"
 
 #import <Cordova/CDVPlugin.h>
+#import <Cordova/CDVInvokedUrlCommand.h>
 
 @interface ZipUtil : CDVPlugin < ZipOperationDelegate > {
 
@@ -29,10 +30,10 @@
 
 @property (nonatomic, retain) NSOperationQueue* operationQueue;
 
-- (void) unzip:(ZipOperation*)zipOperation;
-- (void) zip:(ZipOperation*)zipOperation;
+- (void) unzipWithOperation:(ZipOperation*)zipOperation;
+- (void) zipWithOperation:(ZipOperation*)zipOperation;
 
-- (void) unzip:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) zip:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void) unzip:(CDVInvokedUrlCommand*)command;
+- (void) zip:(CDVInvokedUrlCommand*)command;
 
 @end

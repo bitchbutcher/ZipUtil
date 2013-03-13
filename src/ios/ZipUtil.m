@@ -44,11 +44,12 @@
 	
 	if (result.ok) {
 		pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsDict];
-		[super writeJavascript:[pluginResult toSuccessCallbackString:result.context]];
 	} else {
 		pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:jsDict];
-		[super writeJavascript:[pluginResult toErrorCallbackString:result.context]];
 	}
+    
+    // the context of the ZipResult is the callbackId
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:result.context];
 }
 
 - (void) zipProgress:(ZipProgress*)progress
@@ -56,48 +57,47 @@
 	NSDictionary* jsDict = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:[progress toDictionary], nil] 
 													   forKeys:[NSArray arrayWithObjects:@"zipProgress", nil]];
 	
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:jsDict];
-	[super writeJavascript:[pluginResult toSuccessCallbackString:progress.context]];
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsDict];
+    // the context of the ZipProgress is the callbackId
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:progress.context];
 }
-
 
 #pragma mark -
 #pragma mark Cordova commands
 
-- (void) unzip:(ZipOperation*)zipOperation
+- (void) unzipWithOperation:(ZipOperation*)zipOperation
 {
 	[self.operationQueue addOperation:zipOperation];
 }
 
-- (void) unzip:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+- (void) unzip:(CDVInvokedUrlCommand*)command
 {
-	NSString* callbackId = [arguments objectAtIndex:0];
+	NSString* sourcePath = [command.arguments objectAtIndex:0];
+	NSString* targetFolder = [command.arguments objectAtIndex:1];
 	
-	NSString* sourcePath = [arguments objectAtIndex:0];
-	NSString* targetFolder = [arguments objectAtIndex:1];
-	
-	if ([[NSFileManager defaultManager] fileExistsAtPath:sourcePath]) 
+    NSFileManager* fileManager = [[NSFileManager new] autorelease];
+	if ([fileManager fileExistsAtPath:sourcePath])
 	{
-		ZipOperation* zipOp = [[ZipOperation alloc] initAsDeflate:NO withSource:sourcePath target:targetFolder andContext:callbackId];
+		ZipOperation* zipOp = [[ZipOperation alloc] initAsDeflate:NO withSource:sourcePath target:targetFolder andContext:command.callbackId];
 		zipOp.delegate = self;
-		[self unzip:zipOp];
+		[self unzipWithOperation:zipOp];
 		[zipOp release];
 	}
 	else 
 	{
 		NSString* errorString = [NSString stringWithFormat:@"Source path '%@' does not exist.", sourcePath];
 		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorString];
-		[super writeJavascript:[pluginResult toErrorCallbackString:callbackId]];
+        
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	}
 }
 
-- (void) zip:(ZipOperation*)zipOperation
+- (void) zipWithOperation:(ZipOperation*)zipOperation
 {
     // FUTURE: TODO:
 }
 
-
-- (void) zip:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+- (void) zip:(CDVInvokedUrlCommand*)command
 {
     // FUTURE: TODO:
 }
