@@ -48,6 +48,7 @@
 		pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:jsDict];
 	}
     
+    pluginResult.keepCallback = [NSNumber numberWithBool:NO];
     // the context of the ZipResult is the callbackId
     [self.commandDelegate sendPluginResult:pluginResult callbackId:result.context];
 }
@@ -58,6 +59,7 @@
 													   forKeys:[NSArray arrayWithObjects:@"zipProgress", nil]];
 	
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:jsDict];
+    pluginResult.keepCallback = [NSNumber numberWithBool:YES];
     // the context of the ZipProgress is the callbackId
     [self.commandDelegate sendPluginResult:pluginResult callbackId:progress.context];
 }
@@ -88,6 +90,7 @@
 		NSString* errorString = [NSString stringWithFormat:@"Source path '%@' does not exist.", sourcePath];
 		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errorString];
         
+        pluginResult.keepCallback = [NSNumber numberWithBool:NO];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	}
 }
