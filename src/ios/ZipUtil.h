@@ -21,13 +21,9 @@
 #import "ZipArchive.h"
 #import "ZipOperation.h"
 
-#ifdef PHONEGAP_FRAMEWORK
-    #import <PhoneGap/PGPlugin.h>
-#else
-    #import "PGPlugin.h"
-#endif
+#import <Cordova/CDVPlugin.h>
 
-@interface ZipUtil : PGPlugin < ZipOperationDelegate > {
+@interface ZipUtil : CDVPlugin < ZipOperationDelegate > {
 
 }
 
