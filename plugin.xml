@@ -16,8 +16,12 @@
         <!-- Cordova 2.2.0 -->
         <plugins-plist key="ZipUtil" string="ZipUtil" />
                     
-        <!-- Cordova 2.3.0 -->
+        <!-- use this tag for Cordova 2.3.0, 2.4.0 -->
+        <!--
         <config-file target="config.xml" parent="/cordova/plugins">
+        -->
+        <!-- Cordova 2.5.0 -->
+        <config-file target="config.xml" parent="/widget/plugins">
                 <plugin name="ZipUtil" value="ZipUtil"/>
         </config-file>
 
