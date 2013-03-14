@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-    id="com.phonegap.plugins.testflightsdk"
+    id="com.phonegap.plugins.ziputil"
     version="1.0.0">
 
     <name>ZipUtil</name>
@@ -22,20 +22,22 @@
         </config-file>
 
         <!-- Note: the ios src is based off src/ios implicitly --> 
-        <header-file src="ZipArchive/ZipArchive.h" />
         <header-file src="ZipArchive/minizip/crypt.h" />
         <header-file src="ZipArchive/minizip/ioapi.h" />
         <header-file src="ZipArchive/minizip/mztools.h" />
         <header-file src="ZipArchive/minizip/unzip.h" />
         <header-file src="ZipArchive/minizip/zip.h" />
+
+        <header-file src="ZipArchive/ZipArchive.h" />
         <header-file src="ZipOperation.h" />
         <header-file src="ZipUtil.h" />
         
-        <source-file src="ZipArchive/ZipArchive.mm" />
         <source-file src="ZipArchive/minizip/ioapi.c" />
         <source-file src="ZipArchive/minizip/mztools.c" />
         <source-file src="ZipArchive/minizip/unzip.c" />
         <source-file src="ZipArchive/minizip/zip.c" />
+
+        <source-file src="ZipArchive/ZipArchive.mm" />
         <source-file src="ZipOperation.m" />
         <source-file src="ZipUtil.m" />
         
