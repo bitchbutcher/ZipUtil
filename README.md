@@ -4,16 +4,23 @@ created by Shazron Abdullah
 
 [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) except for the zip library that is under **src/ios/ZipArchive**
 
-Follows the [Cordova Plugin spec](https://github.com/alunny/cordova-plugin-spec), so that it works with [Plugman](https://github.com/imhotep/plugman), or you can install it manually below.
+Follows the [Cordova Plugin spec](https://github.com/apache/cordova-plugman/blob/master/plugin_spec.md), so that it works with [Plugman](https://github.com/apache/cordova-plugman), or you can install it manually below.
  
 1. Add the files in **src/ios** in Xcode (add as a group)
 2. Add **ZipUtil.js** to your **www** folder, and reference it in a script tag, after your cordova.js
-3. In **config.xml**, under the **'plugins'** element, add a new **&lt;plugin&gt;** element: attribute **name** is **"ZipUtil"** and the attribute **value** is **"ZipUtil"**
+3. a. In **config.xml**, under the **'plugins'** element, add a new **&lt;plugin&gt;** element: attribute **name** is **"ZipUtil"** and the attribute **value** is **"ZipUtil"**
 
         <plugins>
             <plugin name="ZipUtil" value="ZipUtil" />
             <!-- other plugins here ... -->
         </plugins>
+        
+	b. For __config.xml__, add a new **&lt;feature&gt;** tag (2.8.0 and up):
+
+         <feature name="ZipUtil">
+            <param name="ios-package" value="ZipUtil" />
+         </feature>
+    
         
 5. Add the lib **"libz.dylib"** in your Build Phases tab of your Project
     
