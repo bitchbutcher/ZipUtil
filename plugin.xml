@@ -8,7 +8,9 @@
     <engines>
         <engine name="cordova" version=">=2.2.0" />
     </engines>
-	
+	<description>
+    This plugin allows you to extract zip files.
+  </description>
     <asset src="www/ZipUtil.js" target="plugins/ZipUtil.js" />
 
     <!-- ios -->
